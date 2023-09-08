@@ -79,7 +79,7 @@ int http_recv_response (HTTPClient* client, struct http_response* http_response)
             perror( "[debug] finished reading???");
             break;
         } else if (bytes_read < 0) {
-
+            ERR_print_errors_fp(stderr);
             break;
         }
 
@@ -105,6 +105,7 @@ int http_recv_response (HTTPClient* client, struct http_response* http_response)
             break;
         }
     }
+
     if (totalRead == 0 || (http_response->bodyLen != (totalRead - headersSize))) {
         http_response->retry = 1;
     } else {
@@ -215,7 +216,6 @@ int parse_response (void* response, HTTPResponse * http_response) {
         return 0;
     }
 
-
     //Content Type Response
     HTTPResponseHeader searchHeader = {0};
     searchHeader.key = "Content-Type";
@@ -241,7 +241,6 @@ int parse_response (void* response, HTTPResponse * http_response) {
     } else {
         http_response->contentType = VND;
     }
-
 
     resp_current_pointer = resp_header_end_pointer + 4;
     http_response->body = calloc(1, http_response->bodyLen);

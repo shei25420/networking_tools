@@ -6,7 +6,7 @@
 #include "WebScraper/WebScraper.h"
 
 int main () {
-   WebScraper * scraper = web_scraper_constructor("https://mannatthemes.com/metrica/default/index.html", "./metrica");
+   WebScraper * scraper = web_scraper_constructor("https://physio4u.co", "./physio4u");
    scraper->init(scraper);
    web_scraper_deconstructor(scraper);
 }

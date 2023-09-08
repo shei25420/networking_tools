@@ -200,7 +200,7 @@ int saveToFile (void* body, long bodySize, char* path, char* dirPath) {
     if (!fd) {
         fprintf(stderr, "[-] error opening file: %s\n", full_path);
         perror("Error: ");
-        goto exit;
+        goto fail1;
     }
 
     size_t bytesWritten = fwrite(body, 1, bodySize, fd);
@@ -211,6 +211,7 @@ int saveToFile (void* body, long bodySize, char* path, char* dirPath) {
     printf("[+] done writing to: %s: %lu bytes\n", full_path, bodySize);
     status = 1;
     exit:
+        fclose(fd);
         free(full_path);
     fail1:
         return status;
@@ -219,28 +220,41 @@ int saveToFile (void* body, long bodySize, char* path, char* dirPath) {
 void* insert_link (char* link, void* args) {
     LinkArgs *linkArgs = (LinkArgs*)args;
 
-    if (link[0] == '/') link++;
     if ((strncmp(link, "http://", strlen("http://")) == 0)) {
-        link += 7;
+        link += 6;
     } else if ((strncmp(link, "https://", strlen("https://")) == 0)) {
-        link += 8;
+        link += 7;
     }
 
-    //Get request path length
-    long long requestLen = 0;
-    char* z = strchr(linkArgs->request, '/');
-    if (z) requestLen = z - linkArgs->request;
-    if (requestLen == 0) requestLen = 1;
+    unsigned long long fullPathLen = 0;
+    unsigned long long requestLen = 0;
+    if (link[0] == '/') {
+        fullPathLen = strlen(link);
+    } else {
+        //Get request path length
+        char* z = strrchr(linkArgs->request, '/');
+        if (z) requestLen = (z - linkArgs->request) + 1;
+        if (requestLen == 0) requestLen = 1;
+
+        fullPathLen += requestLen + strlen(link);
+    }
 
     //Generate Full request
-    char* fullPath = (char *)calloc(1, requestLen + strlen(link) + 1);
+    char* fullPath = (char *)calloc(1, fullPathLen + 1);
     if (!fullPath) {
         perror("[-] error allocating fullPath memory");
         return NULL;
     }
-    strncpy(fullPath, linkArgs->request, requestLen);
-    strncat(fullPath, link, strlen(link));
+    if (link[0] != '/') {
+        strncpy(fullPath, linkArgs->request, requestLen);
+        strncat(fullPath, link, strlen(link));
+    } else {
+        strncpy(fullPath, link, fullPathLen);
+    }
 
+    if (strstr(fullPath, "html1")) {
+        printf("WTF!!");
+    }
     linkArgs->scraper->links->insert(fullPath, strlen(fullPath), linkArgs->scraper->links);
     free(fullPath);
     return NULL;
