@@ -30,5 +30,7 @@ add_executable(scraper main.c
         WebScraper/BinaryNodeStack.h
         DataStructures/Stack/Stack.c
         DataStructures/Stack/Stack.h
+        IPLookup/IPLookup.c
+        IPLookup/IPLookup.h
 )
 target_link_libraries(scraper PRIVATE ${LIBXML2_LIBRARIES})
