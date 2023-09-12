@@ -4,9 +4,9 @@
 #ifndef SCRAPER_HTTPRESPONSE_H
 #define SCRAPER_HTTPRESPONSE_H
 
-#include "../DataStructures/Trees/BinaryTree.h"
+#include "../../DataStructures/Trees/BinaryTree.h"
 
-#include "HttpClient.h"
+#include "../HttpClient.h"
 typedef struct http_response_header {
     char* key;
     char* value;

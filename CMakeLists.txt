@@ -18,10 +18,10 @@ add_executable(scraper main.c
         System/ThreadPool.h
         Protocols/HttpClient.c
         Protocols/HttpClient.h
-        Protocols/HTTPRequest.c
-        Protocols/HTTPRequest.h
-        Protocols/HTTPResponse.c
-        Protocols/HTTPResponse.h
+        Protocols/HTTP/HTTPRequest.c
+        Protocols/HTTP/HTTPRequest.h
+        Protocols/HTTP/HTTPResponse.c
+        Protocols/HTTP/HTTPResponse.h
         WebScraper/HTMLLinksParser.c
         WebScraper/HTMLLinksParser.h
         WebScraper/WebScraper.c
@@ -32,5 +32,13 @@ add_executable(scraper main.c
         DataStructures/Stack/Stack.h
         IPLookup/IPLookup.c
         IPLookup/IPLookup.h
+        DNSQuery/DNSQuery.c
+        DNSQuery/DNSQuery.h
+        Protocols/TCP/TCPServer.c
+        Protocols/TCP/TCPServer.h
+        LikeRedis/LIkeRedis.c
+        LikeRedis/LIkeRedis.h
+        Protocols/TCP/TCPClient.c
+        Protocols/TCP/TCPClient.h
 )
 target_link_libraries(scraper PRIVATE ${LIBXML2_LIBRARIES})

@@ -12,8 +12,8 @@
 #include "WebScraper.h"
 #include "../Protocols/HttpClient.h"
 #include "../System/ThreadPool.h"
-#include "../Protocols/HTTPRequest.h"
-#include "../Protocols/HTTPResponse.h"
+#include "../Protocols/HTTP/HTTPRequest.h"
+#include "../Protocols/HTTP/HTTPResponse.h"
 #include "./HTMLLinksParser.h"
 #include "./BinaryNodeStack.h"
 

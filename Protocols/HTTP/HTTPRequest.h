@@ -5,7 +5,7 @@
 #ifndef SCRAPER_HTTPREQUEST_H
 #define SCRAPER_HTTPREQUEST_H
 
-#include "HttpClient.h"
+#include "../HttpClient.h"
 
 typedef enum http_request_type {
     GET,
